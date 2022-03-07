@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-ssr",
+  "name": "nextjs_pre-rendering_data-fetching",
   "version": "0.1.0",
   "private": true,
   "scripts": {
