@@ -2,30 +2,34 @@ import { List, ListItem, ListItemText, Typography, Divider, ListItemButton } fro
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { Fragment } from 'react';
-import { useGetAllTodosQuery } from '../services/xMoneyApi';
+import useSWR from 'swr';
 
-const Todos: NextPage = ()=> {
-  const { data: todos, isLoading } = useGetAllTodosQuery(undefined, {
-    refetchOnFocus: true,
-  });
+const fetcher = async () => {
+  const res = await fetch("http://localhost:4000/news");
+  const data = await res.json();
+  return data;
+}
 
-  if (isLoading) {
-    return <div>Fetching todos...</div>;
+const News: NextPage = ()=> {
+  const { data: news, error } = useSWR("news", fetcher);
+
+  if (!news && !error) {
+    return <div>Fetching new news...</div>;
   }
 
-  if (!todos) {
-    return <div>No todos found</div>;
+  if (!news) {
+    return <div>No news found</div>;
   }
 
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      {todos.map((todo) => (
-        <Fragment key={todo.id}>
+      {news.map((news: any) => (
+        <Fragment key={news.id}>
           <ListItem alignItems="flex-start">
-            <Link href={`/ssg/${todo.id}`} passHref>
+            <Link href={`/ssg/${news.id}`} passHref>
               <ListItemButton LinkComponent="a">
                 <ListItemText
-                  primary={`User Id: ${todo.userId}`}
+                  primary={`Article: ${news.article}`}
                   secondary={
                     <>
                       <Typography
@@ -34,9 +38,9 @@ const Todos: NextPage = ()=> {
                         variant="body2"
                         color="text.primary"
                       >
-                        {todo.title}
+                        {news.category} {` `}
                       </Typography>
-                      {todo.completed ? " (completed)" : ""}
+                      {news.description}
                     </>
                   }
                 />
@@ -50,4 +54,4 @@ const Todos: NextPage = ()=> {
   );
 }
 
-export default Todos;
+export default News;

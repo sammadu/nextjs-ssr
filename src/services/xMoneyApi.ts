@@ -10,7 +10,7 @@ type Todo = {
 export const xMoneyApi = createApi({
   reducerPath: "xMoneyApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://jsonplaceholder.typicode.com",
+    baseUrl: "http://localhost:4000",
   }),
   endpoints: (build) => ({
     getAllTodos: build.query<Todo[], void | never>({
