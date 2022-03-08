@@ -15,7 +15,7 @@ type Todo = {
 };
 
 type Props = {
-  todo?: Todo;
+  todo: Todo | undefined;
 };
 
 type QueryParams = {
@@ -67,6 +67,10 @@ const Post: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   if (router.isFallback) {
     return <div>Loading...</div>;
+  }
+
+  if (!todo) {
+    return <div>No Todos Found</div>;
   }
 
   return (
