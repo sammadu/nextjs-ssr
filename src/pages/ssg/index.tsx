@@ -8,9 +8,9 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
-  post,
+  todo,
 }) => {
-  const [response, setResponse] = useState(post);
+  const [response, setResponse] = useState(todo);
   const [id, setId] = useState(1);
 
   const fetchNewTodo = async () => {
@@ -72,7 +72,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           <code>{JSON.stringify(response, null, 2)}</code>
         </pre>
         <Button variant="contained" onClick={fetchNewTodo}>
-          Fetch new post
+          Fetch new todo
         </Button>
       </Container>
 
@@ -82,7 +82,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
 };
 
 type Props = {
-  post: {
+  todo: {
     userId: number;
     id: number;
     title: string;
@@ -97,7 +97,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
   return {
     props: {
-      post: json,
+      todo: json,
     },
   };
 };
