@@ -11,13 +11,14 @@ const SSRPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> 
   news
 }) => {
   const [response, setResponse] = useState(news);
-  const [id, setId] = useState(2);
+  const [id, setId] = useState(1);
 
   const fetchNewNews = async () => {
+    setId(id + 1);
+    console.log(`fetchNewNews: ${id}`);
     const res = await fetch(`http://localhost:4000/news/${id}`);
     const json = await res.json();
     setResponse(json);
-    setId(id + 1);
   };
 
   return (

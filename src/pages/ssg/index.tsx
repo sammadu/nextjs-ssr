@@ -11,13 +11,13 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   todo,
 }) => {
   const [response, setResponse] = useState(todo);
-  const [id, setId] = useState(2);
+  const [id, setId] = useState(1);
 
   const fetchNewTodo = async () => {
+    setId(id + 1);
     const res = await fetch(`http://localhost:4000/todos/${id}`);
     const json = await res.json();
     setResponse(json);
-    setId(id + 1);
   };
 
   return (
