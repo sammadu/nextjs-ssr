@@ -1,4 +1,24 @@
 {
+  "news": [
+    {
+      "id": 1,
+      "article": "Article A",
+      "description": "Description A1",
+      "category": "sports"
+    },
+    {
+      "id": 2,
+      "article": "Article B",
+      "description": "Description B2",
+      "category": "finance"
+    },
+    {
+      "id": 3,
+      "article": "Article C",
+      "description": "Description C3",
+      "category": "sports"
+    }
+  ],
   "todos": [
     {
       "userId": 16423,

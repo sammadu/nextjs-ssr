@@ -11,13 +11,13 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   todo,
 }) => {
   const [response, setResponse] = useState(todo);
-  const [id, setId] = useState(1);
+  const [id, setId] = useState(2);
 
   const fetchNewTodo = async () => {
-    setId((id) => id + 1);
-    const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`);
+    const res = await fetch(`http://localhost:4000/todos/${id}`);
     const json = await res.json();
     setResponse(json);
+    setId(id + 1);
   };
 
   return (
@@ -91,13 +91,12 @@ type Props = {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const data = await fetch(`http://localhost:4000/todos/1`);
-  const json = await data.json();
-  console.log({ sg: json });
+  const resposne = await fetch(`http://localhost:4000/todos/1`);
+  const todo = await resposne.json() as Props["todo"];
 
   return {
     props: {
-      todo: json,
+      todo,
     },
     revalidate: 10,
   };

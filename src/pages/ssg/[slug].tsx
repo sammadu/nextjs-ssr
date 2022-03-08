@@ -5,7 +5,6 @@ import type {
   NextPage,
 } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 type Todo = {
@@ -26,12 +25,12 @@ type QueryParams = {
 export const getStaticProps: GetStaticProps<Props, QueryParams> = async ({
   params,
 }) => {
-  const data = await fetch(`http://localhost:4000/todos/${params?.slug ?? -1}`);
-  const json = (await data.json()) as Todo;
+  const response = await fetch(`http://localhost:4000/todos/${params?.slug ?? -1}`);
+  const todo = (await response.json()) as Todo;
 
-  console.log(json);
+  console.log(todo);
 
-  if (!json?.id) {
+  if (!todo?.id) {
     return {
       notFound: true,
     };
@@ -39,17 +38,17 @@ export const getStaticProps: GetStaticProps<Props, QueryParams> = async ({
 
   return {
     props: {
-      todo: json,
+      todo,
     },
     revalidate: 10,
   };
 };
 
 export const getStaticPaths: GetStaticPaths<QueryParams> = async () => {
-  const request = await fetch("http://localhost:4000/todos");
-  const json = (await request.json()) as Todo[];
+  const response = await fetch("http://localhost:4000/todos");
+  const todos = (await response.json()) as Todo[];
 
-  const todosId = json.slice(0, 3).map((todo: Todo) => ({
+  const todosId = todos.slice(0, 3).map((todo: Todo) => ({
     params: {
       slug: todo.id.toString(),
     },
