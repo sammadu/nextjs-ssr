@@ -26,9 +26,7 @@ type QueryParams = {
 export const getStaticProps: GetStaticProps<Props, QueryParams> = async ({
   params,
 }) => {
-  const data = await fetch(
-    `https://jsonplaceholder.typicode.com/todos/${params?.slug ?? -1}`
-  );
+  const data = await fetch(`http://localhost:4000/todos/${params?.slug ?? -1}`);
   const json = (await data.json()) as Todo;
 
   console.log(json);
@@ -43,11 +41,12 @@ export const getStaticProps: GetStaticProps<Props, QueryParams> = async ({
     props: {
       todo: json,
     },
+    revalidate: 10,
   };
 };
 
 export const getStaticPaths: GetStaticPaths<QueryParams> = async () => {
-  const request = await fetch("https://jsonplaceholder.typicode.com/todos");
+  const request = await fetch("http://localhost:4000/todos");
   const json = (await request.json()) as Todo[];
 
   const todosId = json.slice(0, 3).map((todo: Todo) => ({

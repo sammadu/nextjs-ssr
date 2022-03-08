@@ -31,7 +31,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       <CssBaseline />
       <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
         <Typography variant="h2" component="h1" gutterBottom>
-          Pre Rendering - SSG with Props
+          Pre Rendering - ISR
         </Typography>
         <Typography variant="h5" component="h2" gutterBottom>
           Next JS pre-renders pages in the application, HTML pages are generated
@@ -91,7 +91,7 @@ type Props = {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const data = await fetch(`https://jsonplaceholder.typicode.com/todos/1`);
+  const data = await fetch(`http://localhost:4000/todos/1`);
   const json = await data.json();
   console.log({ sg: json });
 
@@ -99,6 +99,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     props: {
       todo: json,
     },
+    revalidate: 10,
   };
 };
 

@@ -1,0 +1,28 @@
+{
+  "todos": [
+    {
+      "userId": 16423,
+      "id": 1,
+      "title": "delectus aut autem",
+      "completed": false
+    },
+    {
+      "userId": 45572,
+      "id": 2,
+      "title": "quis ut nam facilis et officia qui",
+      "completed": false
+    },
+    {
+      "userId": 75444,
+      "id": 3,
+      "title": "fugiat veniam minus",
+      "completed": false
+    },
+    {
+      "userId": 88622,
+      "id": 4,
+      "title": "et porro tempora",
+      "completed": true
+    }
+  ]
+}
