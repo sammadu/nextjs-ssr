@@ -1,7 +1,7 @@
-import React from 'react'
+import { NextPage } from 'next';
 import { useGetAllTodosQuery } from '../services/xMoneyApi';
 
-const Todos = (): JSX.Element => {
+const Todos: NextPage = ()=> {
   const { data, isLoading } = useGetAllTodosQuery();
 
   if (isLoading) {
