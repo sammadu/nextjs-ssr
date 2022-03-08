@@ -1,11 +1,27 @@
-import type { NextPage } from "next";
+import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Footer from "./common/Footer";
+import { useState } from "react";
+import { Button } from "@mui/material";
 
-const Home: NextPage = () => {
+const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
+  data
+}) => {
+  const [response, setResponse] = useState(data);
+  const [id, setId] = useState(1);
+
+  const fetchNewTodo = async () => {
+    setId(id => id + 1);
+    const res = await fetch(
+      `https://jsonplaceholder.typicode.com/todos/${id}`
+    );
+    const json = await res.json();
+    setResponse(json);
+  }
+
   return (
     <Box
       sx={{
@@ -34,11 +50,42 @@ const Home: NextPage = () => {
         <Typography variant="body2">
           <b>dev server: </b> page is pre-rendered for every request you make
         </Typography>
+
+
+        <pre>
+          {id === 1 ? "// Statically Fetched" : "// Client Side Fetched"}
+          <br />
+          <code>{JSON.stringify(response, null, 2)}</code>
+        </pre>
+        <Button variant="contained" onClick={fetchNewTodo}>
+          Fetch new post
+        </Button>
       </Container>
 
       <Footer />
     </Box>
   );
+};
+
+type Props = {
+  data: {
+    userId: number;
+    id: number;
+    title: string;
+    completed: boolean;
+  };
+};
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const data = await fetch(`https://jsonplaceholder.typicode.com/todos/1`);
+  const json = await data.json();
+  console.log(json);
+  
+  return {
+    props: {
+      data: json,
+    },
+  };
 };
 
 export default Home;
