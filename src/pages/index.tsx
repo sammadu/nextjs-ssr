@@ -3,7 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Footer from "./common/Footer";
+import Footer from "../common/Footer";
 import { useState } from "react";
 import { Button } from "@mui/material";
 
