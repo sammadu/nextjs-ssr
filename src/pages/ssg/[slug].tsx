@@ -9,30 +9,39 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 type Post = {
-    userId: number;
-    id: number;
-    title: string;
-    completed: boolean;
-  };
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+};
 
 type Props = {
-  post: Post;
+  post?: Post;
 };
 
 type QueryParams = {
   slug: string;
 };
 
-export const getStaticProps: GetStaticProps<Props, QueryParams> = async ({ params }) => {
-  const data = await fetch(`https://jsonplaceholder.typicode.com/todos`);
-  const json = await data.json();
+export const getStaticProps: GetStaticProps<Props, QueryParams> = async ({
+  params,
+}) => {
+  const data = await fetch(
+    `https://jsonplaceholder.typicode.com/todos/${params?.slug ?? -1}`
+  );
+  const json = (await data.json()) as Post;
 
-  const post = json.find((post: Post) => post?.id.toString() === params?.slug);
-  console.log({ sg: post });
+  console.log(json);
+
+  if (!json?.id) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
-      post,
+      post: json,
     },
   };
 };
@@ -41,7 +50,7 @@ export const getStaticPaths: GetStaticPaths<QueryParams> = async () => {
   const request = await fetch("https://jsonplaceholder.typicode.com/todos");
   const json = (await request.json()) as Post[];
 
-  const postsId = json.map((post: Post) => ({
+  const postsId = json.slice(0, 3).map((post: Post) => ({
     params: {
       slug: post.id.toString(),
     },
@@ -49,7 +58,7 @@ export const getStaticPaths: GetStaticPaths<QueryParams> = async () => {
 
   return {
     paths: postsId,
-    fallback: false,
+    fallback: true, // fallback false returns 404 if path is not in the list
   };
 };
 
