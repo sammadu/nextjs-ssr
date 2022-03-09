@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import { NextPage } from "next";
 import Image from 'next/image';
 
-const Car: NextPage = () => {
+const Images: NextPage = () => {
   return (
     <Stack direction="row">
       <Image src="/images/ethereum.png" alt="ethereum" width={42} height={42} />
@@ -13,4 +13,4 @@ const Car: NextPage = () => {
   );
 };
 
-export default Car;
+export default Images;
