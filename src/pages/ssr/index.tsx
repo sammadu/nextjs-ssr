@@ -6,6 +6,7 @@ import Container from "@mui/material/Container";
 import Footer from "../../common/Footer";
 import { useState } from "react";
 import { Button } from "@mui/material";
+import baseUrl from "../../baseUrl";
 
 const SSRPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
   news
@@ -16,7 +17,7 @@ const SSRPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> 
   const fetchNewNews = async () => {
     setId(id + 1);
     console.log(`fetchNewNews: ${id}`);
-    const res = await fetch(`http://localhost:4000/news/${id}`);
+    const res = await fetch(`${baseUrl}/news/${id}`);
     const json = await res.json();
     setResponse(json);
   };
@@ -67,7 +68,7 @@ type Props = {
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const response = await fetch(`http://localhost:4000/news/1`);
+  const response = await fetch(`${baseUrl}/news/1`);
   const news = await response.json() as Props["news"];
   console.log({ ssr: news });
 

@@ -6,6 +6,7 @@ import Container from "@mui/material/Container";
 import Footer from "../../common/Footer";
 import { useState } from "react";
 import { Button } from "@mui/material";
+import baseUrl from "../../baseUrl";
 
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   todo,
@@ -15,7 +16,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
 
   const fetchNewTodo = async () => {
     setId(id + 1);
-    const res = await fetch(`http://localhost:4000/todos/${id}`);
+    const res = await fetch(`${baseUrl}/todos/${id}`);
     const json = await res.json();
     setResponse(json);
   };
@@ -91,7 +92,7 @@ type Props = {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const resposne = await fetch(`http://localhost:4000/todos/1`);
+  const resposne = await fetch(`${baseUrl}/todos/1`);
   const todo = await resposne.json() as Props["todo"];
 
   return {

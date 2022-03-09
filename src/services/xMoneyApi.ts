@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import baseUrl from '../baseUrl';
 
 type Todo = {
   userId: number;
@@ -10,7 +11,7 @@ type Todo = {
 export const xMoneyApi = createApi({
   reducerPath: "xMoneyApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4000",
+    baseUrl: baseUrl,
   }),
   endpoints: (build) => ({
     getAllTodos: build.query<Todo[], void | never>({

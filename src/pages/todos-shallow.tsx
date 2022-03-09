@@ -11,6 +11,7 @@ import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from "next"
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
+import baseUrl from "../baseUrl";
 
 const TodosShallow: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
   todos: prefetchedTodos,
@@ -19,7 +20,7 @@ const TodosShallow: NextPage<InferGetServerSidePropsType<typeof getServerSidePro
   const router = useRouter();
 
   const fetchUser1Todos = async () => {
-    const res = await fetch("http://localhost:4000/todos?userId=1");
+    const res = await fetch(`${baseUrl}/todos?userId=1`);
     const data = await res.json();
     setTodos(data);
     router.push("/todos-shallow?userId=1", undefined, { shallow: true });
@@ -65,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { userId } = query;
   const completedQuery = userId ? `?userId=1` : "";
 
-  const res = await fetch(`http://localhost:4000/todos${completedQuery}`);
+  const res = await fetch(`${baseUrl}/todos${completedQuery}`);
   const data = await res.json();
 
   return {

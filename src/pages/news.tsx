@@ -3,9 +3,10 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 import { Fragment } from 'react';
 import useSWR from 'swr';
+import baseUrl from '../baseUrl';
 
 const fetcher = async () => {
-  const res = await fetch("http://localhost:4000/news");
+  const res = await fetch(`${baseUrl}/news`);
   const data = await res.json();
   return data;
 }

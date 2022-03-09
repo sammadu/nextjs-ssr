@@ -6,6 +6,7 @@ import type {
 } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import baseUrl from "../../baseUrl";
 
 type Todo = {
   userId: number;
@@ -25,7 +26,7 @@ type QueryParams = {
 export const getStaticProps: GetStaticProps<Props, QueryParams> = async ({
   params,
 }) => {
-  const response = await fetch(`http://localhost:4000/todos/${params?.slug ?? -1}`);
+  const response = await fetch(`${baseUrl}/todos/${params?.slug ?? -1}`);
   const todo = (await response.json()) as Todo;
 
   console.log(todo);
@@ -45,7 +46,7 @@ export const getStaticProps: GetStaticProps<Props, QueryParams> = async ({
 };
 
 export const getStaticPaths: GetStaticPaths<QueryParams> = async () => {
-  const response = await fetch("http://localhost:4000/todos");
+  const response = await fetch(`${baseUrl}/todos`);
   const todos = (await response.json()) as Todo[];
 
   const todosId = todos.slice(0, 3).map((todo: Todo) => ({

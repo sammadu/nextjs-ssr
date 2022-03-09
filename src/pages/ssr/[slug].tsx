@@ -4,6 +4,7 @@ import type {
   NextPage,
 } from "next";
 import Head from "next/head";
+import baseUrl from "../../baseUrl";
 
 type News = {
   id: number;
@@ -23,7 +24,7 @@ type QueryParams = {
 export const getServerSideProps: GetServerSideProps<Props, QueryParams> = async ({
   params,
 }) => {
-  const response = await fetch(`http://localhost:4000/news?category=${params?.slug}`);
+  const response = await fetch(`${baseUrl}/news?category=${params?.slug}`);
   const newsList = (await response.json()) as News[];
 
   console.log(newsList);
